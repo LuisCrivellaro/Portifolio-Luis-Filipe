@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight, Download, MessageCircle } from "lucide-react";
 import { SITE } from "@/lib/data";
 import { DotGlobeHero } from "@/components/ui/globe-hero";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { HeroDock } from "@/components/ui/HeroDock";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 const HEADLINE_WORDS = SITE.headline.split(" ");
@@ -110,7 +111,7 @@ export function Hero({ cv }: { cv?: string }) {
           }}
         />
 
-        <div className="mx-auto flex max-w-5xl flex-col items-center px-6 pb-24 pt-32 text-center md:px-10 md:pt-40">
+        <div className="mx-auto flex max-w-5xl flex-col items-center px-6 pb-24 pt-32 text-center md:px-10 md:pb-36 md:pt-40">
           {SITE.availability && (
             <div className="hero-badge mb-10 inline-flex items-center gap-3 border border-accent/30 bg-accent-dim/40 px-5 py-2">
               <span className="relative flex h-2 w-2">
@@ -190,6 +191,10 @@ export function Hero({ cv }: { cv?: string }) {
                 </MagneticButton>
               </div>
             )}
+          </div>
+
+          <div className="mt-10">
+            <HeroDock />
           </div>
         </div>
       </DotGlobeHero>

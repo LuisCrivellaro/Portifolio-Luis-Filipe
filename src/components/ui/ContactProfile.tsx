@@ -1,12 +1,11 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Download } from "lucide-react";
-import { SITE, type Photo } from "@/lib/data";
-import { cn } from "@/lib/utils";
+import { SITE } from "@/lib/data";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ContactLanyard } from "@/components/ui/ContactLanyard";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 const DESKTOP_QUERY = "(min-width: 768px)";
@@ -26,52 +25,33 @@ function useIsDesktop() {
   );
 }
 
-// Photo on the left with the card overlapping it; on mobile the card overlaps the bottom of the photo.
-export function ContactProfile({ photo, cv }: { photo: Photo | null; cv?: string }) {
+// Keep the badge clear of the contact copy so its full surface can be dragged.
+export function ContactProfile({ cv }: { cv?: string }) {
   const reduced = useReducedMotion();
   const desktop = useIsDesktop();
   // Both are only known after hydration: remount so the entrance starts from the right state.
   const motionKey = `${reduced}-${desktop}`;
 
   return (
-    // The container drives the entrance: a clipped photo never counts as "in view" on its own.
+    // The container drives the entrance for both the visual and the contact copy.
     <motion.div
       key={motionKey}
       initial={reduced ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.25 }}
-      className={cn(
-        "mx-auto mt-12 flex max-w-sm flex-col md:mt-16 md:max-w-none md:flex-row md:items-center",
-        !photo && "md:max-w-2xl md:mx-0"
-      )}
+      className="mx-auto mt-12 grid max-w-sm grid-cols-1 items-center gap-8 md:mt-16 md:max-w-none md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-16"
     >
-      {photo && (
-        <motion.figure
-          variants={{
-            hidden: { clipPath: "inset(0 100% 0 0)" },
-            visible: { clipPath: "inset(0 0% 0 0)", transition: { duration: 0.9, ease: EASE } },
-          }}
-          className="group relative aspect-square w-full shrink-0 overflow-hidden border border-border-strong bg-bg-elevated md:w-[420px] lg:w-[460px]"
-        >
-          <Image
-            src={photo.src}
-            width={photo.width}
-            height={photo.height}
-            alt={photo.alt}
-            sizes="(min-width: 1024px) 460px, (min-width: 768px) 420px, 100vw"
-            draggable={false}
-            className="h-full w-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.03]"
-          />
-          <span aria-hidden="true" className="absolute bottom-5 left-5 h-0.5 w-12 bg-accent" />
-        </motion.figure>
-      )}
-
-      <div
-        className={cn(
-          "relative z-10",
-          photo && "-mt-16 mx-4 md:mx-0 md:mt-0 md:-ml-24 md:max-w-xl md:flex-1"
-        )}
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 16 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+        }}
+        className="min-w-0"
       >
+        <ContactLanyard />
+      </motion.div>
+
+      <div className="relative z-10 min-w-0">
         <motion.div
           variants={{
             hidden: { opacity: 0, x: desktop ? 24 : 0, y: desktop ? 0 : 24 },
@@ -79,7 +59,7 @@ export function ContactProfile({ photo, cv }: { photo: Photo | null; cv?: string
               opacity: 1,
               x: 0,
               y: 0,
-              transition: { duration: 0.7, delay: photo ? 0.15 : 0, ease: EASE },
+              transition: { duration: 0.7, delay: 0.15, ease: EASE },
             },
           }}
           className="border border-border-strong bg-bg-elevated/90 p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md md:p-10 lg:p-12"

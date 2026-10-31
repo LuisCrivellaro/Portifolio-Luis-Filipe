@@ -1,6 +1,5 @@
 import { ArrowUpRight, Mail } from "lucide-react";
-import { CONTACT, SITE } from "@/lib/data";
-import { publicAssetExists } from "@/lib/assets";
+import { SITE } from "@/lib/data";
 import { GithubMark, InstagramMark, LinkedinMark } from "@/components/ui/icons";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ContactProfile } from "@/components/ui/ContactProfile";
@@ -21,22 +20,16 @@ const LINKS = [
 ] as const;
 
 export function Contact({ index, cv }: { index: string; cv?: string }) {
-  const photo = publicAssetExists(CONTACT.photo.src) ? CONTACT.photo : null;
-
   return (
     <section id="contact" className="border-t border-border px-6 py-28 md:px-10 md:py-36">
       <div className="mx-auto max-w-7xl">
         <SectionLabel index={index} label="Contato" />
 
-        <ContactProfile photo={photo} cv={cv} />
+        <ContactProfile cv={cv} />
 
         <nav
           aria-label="Links de contato"
-          className={
-            photo
-              ? "mt-20 flex flex-col divide-y divide-border border-y border-border md:mt-32"
-              : "mt-20 flex flex-col divide-y divide-border border-y border-border"
-          }
+          className="mt-20 flex flex-col divide-y divide-border border-y border-border md:mt-32"
         >
           {LINKS.map(({ label, href, external, Icon, ...link }) => (
             <a

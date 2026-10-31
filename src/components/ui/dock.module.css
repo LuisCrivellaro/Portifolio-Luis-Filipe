@@ -1,0 +1,126 @@
+.dock {
+  position: relative;
+  isolation: isolate;
+  width: max-content;
+  max-width: 100%;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--bg) 88%, transparent),
+    color-mix(in srgb, var(--bg) 82%, var(--accent) 5%)
+  );
+  box-shadow: 0 10px 30px rgb(0 0 0 / 20%), inset 0 1px 0 rgb(255 255 255 / 3%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.items {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+}
+
+.link {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  color: color-mix(in srgb, var(--fg) 85%, var(--muted));
+  transform-origin: center bottom;
+  transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease,
+    box-shadow 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.link > svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.link:focus-visible,
+.link:active {
+  border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  background: color-mix(in srgb, var(--accent) 9%, transparent);
+  color: var(--accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 7%, transparent);
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 1;
+  bottom: calc(100% + 25px);
+  left: 50%;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--bg-elevated);
+  color: var(--fg);
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  line-height: 1.5;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%);
+  transition: opacity 150ms ease, visibility 150ms ease;
+}
+
+/* Bridge the gap so the tooltip remains visible when the pointer enters it. */
+.tooltip::after {
+  position: absolute;
+  inset: 100% 0 auto;
+  height: 25px;
+  content: "";
+}
+
+.item:focus-within .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+    background: color-mix(in srgb, var(--accent) 9%, transparent);
+    color: var(--accent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 7%, transparent);
+  }
+
+  .item:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.item[data-tooltip-dismissed] .tooltip {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link,
+  .tooltip {
+    transition: none;
+  }
+
+  .link {
+    transform: none !important;
+  }
+}

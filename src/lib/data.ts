@@ -69,12 +69,11 @@ export type Photo = {
 };
 
 export const CONTACT = {
-  // Composition built from luis-contato.jpg: face in a circle over a purple background.
-  photo: {
-    src: "/images/luis-contato-card.jpg",
-    width: 960,
-    height: 960,
-    alt: "Luis Filipe Crivellaro sorrindo, em um retrato circular sobre fundo roxo",
+  avatar: {
+    src: "/images/avatar-sticker-bw.png",
+    width: 1024,
+    height: 1371,
+    alt: "Ilustra\u00e7\u00e3o de Luis Filipe Crivellaro em estilo sticker preto e branco",
   } satisfies Photo,
 } as const;
 
