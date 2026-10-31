@@ -14,7 +14,7 @@ export function MobileMenu({ activeId }: { activeId: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Open menu"
+        aria-label="Abrir menu"
         aria-expanded={open}
         className="text-fg"
       >
@@ -37,14 +37,14 @@ export function MobileMenu({ activeId }: { activeId: string }) {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                aria-label="Close menu"
+                aria-label="Fechar menu"
                 className="text-fg"
               >
                 <X size={22} strokeWidth={1.5} />
               </button>
             </div>
 
-            <nav aria-label="Mobile" className="flex flex-1 flex-col justify-center gap-2 px-8">
+            <nav aria-label="Menu principal" className="flex flex-1 flex-col justify-center gap-2 px-8">
               {NAV_LINKS.map((link, index) => (
                 <motion.a
                   key={link.href}

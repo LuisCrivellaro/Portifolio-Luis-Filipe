@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import { GrainOverlay } from "@/components/ui/GrainOverlay";
 import { MotionProvider } from "@/components/ui/MotionProvider";
 
@@ -22,32 +21,32 @@ const siteUrl = "https://luisfilipecrivellaro.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Luis Filipe Crivellaro — Software Engineer | AI & Automation",
+  title: "Luis Filipe Crivellaro — Engenheiro de Software | IA & Automação",
   description:
-    "Portfolio of Luis Filipe Crivellaro, a Software Engineer focused on AI, automation, software development and modern web technologies.",
+    "Portfólio de Luis Filipe Crivellaro, engenheiro de software que constrói sistemas internos, agentes de IA e automações para empresas reais.",
   keywords: [
     "Luis Filipe Crivellaro",
-    "Software Engineer",
-    "AI Automation",
+    "Engenheiro de Software",
+    "Automação com IA",
     "n8n",
-    "AI Agents",
-    "Portfolio",
+    "Agentes de IA",
+    "Portfólio",
   ],
   authors: [{ name: "Luis Filipe Crivellaro" }],
   openGraph: {
-    title: "Luis Filipe Crivellaro — Software Engineer | AI & Automation",
+    title: "Luis Filipe Crivellaro — Engenheiro de Software | IA & Automação",
     description:
-      "Portfolio of Luis Filipe Crivellaro, a Software Engineer focused on AI, automation, software development and modern web technologies.",
+      "Portfólio de Luis Filipe Crivellaro, engenheiro de software que constrói sistemas internos, agentes de IA e automações para empresas reais.",
     url: siteUrl,
     siteName: "Luis Filipe Crivellaro",
-    locale: "en_US",
+    locale: "pt_BR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Luis Filipe Crivellaro — Software Engineer | AI & Automation",
+    title: "Luis Filipe Crivellaro — Engenheiro de Software | IA & Automação",
     description:
-      "Portfolio of Luis Filipe Crivellaro, a Software Engineer focused on AI, automation, software development and modern web technologies.",
+      "Portfólio de Luis Filipe Crivellaro, engenheiro de software que constrói sistemas internos, agentes de IA e automações para empresas reais.",
   },
 };
 
@@ -63,16 +62,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body className={`${bricolage.variable} ${plexMono.variable} antialiased`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent focus:text-bg focus:px-4 focus:py-2 focus:text-sm"
         >
-          Skip to content
+          Pular para o conteúdo
         </a>
         <GrainOverlay />
-        <CustomCursor />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

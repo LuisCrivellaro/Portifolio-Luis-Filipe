@@ -13,6 +13,7 @@ type MagneticButtonProps = {
   onClick?: () => void;
   target?: string;
   rel?: string;
+  download?: boolean;
   ariaLabel?: string;
 };
 
@@ -24,6 +25,7 @@ export function MagneticButton({
   onClick,
   target,
   rel,
+  download,
   ariaLabel,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -65,6 +67,7 @@ export function MagneticButton({
           onClick={onClick}
           target={target}
           rel={rel}
+          download={download}
           aria-label={ariaLabel}
           className="inline-flex items-center gap-3"
         >

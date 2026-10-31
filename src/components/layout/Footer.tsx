@@ -1,4 +1,5 @@
 import { SITE } from "@/lib/data";
+import { InstagramMark } from "@/components/ui/icons";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -13,7 +14,7 @@ export function Footer() {
           </p>
         </div>
 
-        <nav aria-label="Footer" className="flex gap-6 font-mono text-xs uppercase tracking-[0.15em]">
+        <nav aria-label="Rodapé" className="flex items-center gap-6 font-mono text-xs uppercase tracking-[0.15em]">
           <a
             href={SITE.github}
             target="_blank"
@@ -31,13 +32,22 @@ export function Footer() {
             LinkedIn
           </a>
           <a href={`mailto:${SITE.email}`} className="text-muted transition-colors hover:text-fg">
-            Email
+            E-mail
+          </a>
+          <a
+            href={SITE.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="text-muted transition-colors hover:text-fg"
+          >
+            <InstagramMark size={15} />
           </a>
         </nav>
       </div>
 
       <p className="mx-auto mt-10 max-w-7xl font-mono text-[11px] tracking-[0.1em] text-muted-2">
-        © {year} {SITE.name}. All rights reserved.
+        © {year} {SITE.name}. Todos os direitos reservados.
       </p>
     </footer>
   );

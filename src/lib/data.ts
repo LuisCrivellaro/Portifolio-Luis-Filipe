@@ -1,100 +1,294 @@
+// Content for the whole site. Any field left undefined is omitted from the page.
+// Never fill a TODO with a guess: leave it empty until the real value is known.
+
+// TODO: LinkedIn member ID (starts with "ACoAA"), so "Entrar em contato" opens the chat directly.
+// Until it is set, the buttons open the LinkedIn profile, where the "Mensagem" button is.
+const LINKEDIN_MEMBER_ID: string | undefined = undefined;
+const LINKEDIN_PROFILE = "https://www.linkedin.com/in/luis-crivellaro/";
+
 export const SITE = {
   name: "Luis Filipe Crivellaro",
-  role: "Software Engineer | AI & Automation",
-  headline: "Turning ideas into software, automation and intelligent systems.",
+  role: "Engenheiro de Software | IA & Automação",
+  // Options considered:
+  //   "Construo sistemas internos e agentes de IA que rodam em empresas reais."
+  //   "Sistemas internos, agentes de IA e automação, feitos para empresas que usam no dia a dia."
+  //   "Software que faz empresas reais funcionarem: sistemas internos, agentes de IA e automação."
+  headline: "Construo sistemas internos e agentes de IA que rodam em empresas reais.",
   email: "lipecrivellaro468@gmail.com",
   github: "https://github.com/LuisCrivellaro",
-  linkedin: "https://www.linkedin.com/in/luis-crivellaro/",
+  linkedin: LINKEDIN_PROFILE,
+  linkedinChat: LINKEDIN_MEMBER_ID
+    ? `https://www.linkedin.com/messaging/compose/?recipient=${LINKEDIN_MEMBER_ID}`
+    : LINKEDIN_PROFILE,
+  instagram: "https://www.instagram.com/lipe.crivellaro/",
+  // Shown as a small status in the Hero and in Contact.
+  availability: "Disponível para estágio e projetos freelance" as string | undefined,
+  // Shown as a "Baixar currículo" button once the file exists in public/.
+  cv: "/cv-luis-crivellaro.pdf",
 } as const;
 
 export const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Contact", href: "#contact" },
+  { label: "Sobre", href: "#about" },
+  { label: "Experiência", href: "#experience" },
+  { label: "Projetos", href: "#projects" },
+  { label: "Habilidades", href: "#skills" },
+  { label: "Contato", href: "#contact" },
 ] as const;
+
+export type Photo = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+};
+
+export const CONTACT = {
+  // Shown once the file exists in public/.
+  photo: {
+    src: "/images/luis-contato.jpg",
+    width: 960,
+    height: 960,
+    alt: "Luis Filipe Crivellaro sorrindo no palco do FIAP NEXT",
+  } satisfies Photo,
+} as const;
 
 export const ABOUT = {
   paragraphs: [
-    "I'm a Software Engineering student at FIAP, building a career at the intersection of software development, automation and artificial intelligence.",
-    "My work is hands-on: designing AI agents, wiring automated workflows and integrating the APIs and tools that let processes run with less manual effort.",
+    "Sou estudante de Engenharia de Software na FIAP. Desde o estágio na ScaleUp construo para clientes reais e, hoje, desenvolvo o sistema interno de um escritório de advocacia internacional.",
+    "Meu foco é software que resolve problema de negócio e IA com controle e segurança: o servidor dá a palavra final, e pessoas revisam as etapas que importam.",
   ],
+  // Shown once the file exists in public/.
+  portrait: {
+    src: "/images/luis-retrato.jpg",
+    width: 800,
+    height: 960,
+    alt: "Retrato de Luis Filipe Crivellaro",
+  } satisfies Photo,
   focus: [
-    "AI agent development",
-    "Workflow automation with n8n",
-    "API integration",
-    "Process automation",
+    "Sistemas internos para empresas",
+    "Agentes de IA com controle no servidor",
+    "Automação de fluxos com n8n",
+    "Integração de APIs",
   ],
-  stack: ["JavaScript", "SQL", "Git", "GitHub", "Power BI"],
+  stack: ["TypeScript", "React", "Next.js", "Supabase", "Claude API", "n8n"],
 } as const;
 
-export const EXPERIENCE = {
-  company: "ScaleUp",
-  role: "Automation & Artificial Intelligence Intern",
-  period: "March 2025 — October 2025",
-  points: [
-    "Development of custom AI agents for companies",
-    "Creation of automated workflows using n8n",
-    "Integration of APIs and external tools",
-    "Automation of operational processes",
-    "Implementation of solutions to reduce manual work",
-    "Application of AI across different business contexts",
-  ],
-} as const;
-
-export type Project = {
+export type ExperienceEntry = {
   id: string;
-  index: string;
-  name: string;
-  description: string;
-  tags: readonly string[];
-  href?: string;
-  visual: "ngo" | "ecopiso" | "agent" | "gsfront";
+  company: string;
+  role?: string;
+  start?: string;
+  end: string;
+  current?: boolean;
+  points: readonly string[];
 };
 
-export const PROJECTS: readonly Project[] = [
+export const EXPERIENCE: readonly ExperienceEntry[] = [
+  {
+    id: "law-firm",
+    company: "Escritório de advocacia internacional",
+    // TODO: job title at the law firm.
+    role: undefined,
+    // TODO: start month/year, e.g. "Novembro de 2025".
+    start: undefined,
+    end: "Atual",
+    current: true,
+    points: [
+      "Desenvolvimento de soluções tecnológicas internas",
+      "Manager ADV, o sistema interno de gestão jurídica do escritório",
+      "Ana, assistente virtual com IA para atendimento e agendamento",
+    ],
+  },
+  {
+    id: "scaleup",
+    company: "ScaleUp",
+    role: "Estagiário de Automação e Inteligência Artificial",
+    start: "Março de 2025",
+    end: "Outubro de 2025",
+    points: [
+      "Desenvolvimento de agentes de IA personalizados para empresas",
+      "Criação de fluxos automatizados com n8n",
+      "Integração de APIs e ferramentas externas",
+      "Automação de processos operacionais",
+      "Implementação de soluções para reduzir trabalho manual",
+      "Aplicação de IA em diferentes contextos de negócio",
+    ],
+  },
+];
+
+export type Recognition = {
+  id: string;
+  event: string;
+  year?: string;
+  award?: string;
+  description?: string;
+  photo?: Photo;
+};
+
+// An entry is listed only once its award is filled in.
+export const RECOGNITION: readonly Recognition[] = [
+  {
+    id: "fiap-next",
+    event: "FIAP NEXT",
+    // TODO: year of the event.
+    year: undefined,
+    // TODO: placement and category, e.g. "1º lugar — UX Learning Challenge".
+    award: undefined,
+    // TODO: one sentence about the awarded project and the team.
+    description: undefined,
+    photo: {
+      src: "/images/luis-fiap-next.jpg",
+      width: 1200,
+      height: 1600,
+      alt: "Luis Filipe Crivellaro no palco do FIAP NEXT, com medalha e prêmio",
+    },
+  },
+];
+
+export type ProjectStatus = "Em produção" | "Em teste" | "Protótipo" | "Em uso" | "Em implantação";
+
+export type FeaturedProject = {
+  id: string;
+  name: string;
+  client: string;
+  problem: string;
+  built: string;
+  highlights: readonly string[];
+  result?: string;
+  tags: readonly string[];
+  status?: ProjectStatus;
+  statusNote?: string;
+  private?: boolean;
+  links: readonly { label: string; href: string }[];
+  linkNote?: string;
+  // Stylized mini screen of the real system (no screenshots: client brand and data stay private).
+  visual: ProjectVisualKind;
+};
+
+// Academic visuals (ngo, ecopiso, agent, gsfront) are kept for the earlier projects.
+export type ProjectVisualKind = "ngo" | "ecopiso" | "agent" | "gsfront" | "manageradv" | "caixanovo";
+
+export const FEATURED_PROJECTS: readonly FeaturedProject[] = [
+  {
+    id: "manager-adv",
+    name: "Manager ADV",
+    client: "Escritório de advocacia internacional · Brasil, Dubai e Portugal",
+    problem:
+      "Um escritório de advocacia internacional precisava acompanhar cada caso do primeiro contato do cliente até o andamento do processo, com um advogado revisando cada etapa jurídica.",
+    built:
+      "Um sistema interno de gestão jurídica com painel de prazos, produção de petições com IA, fila de aprovação de minutas, auditoria (IA + advogado), clientes, treinamento da IA e painel de integrações. Junto dele, a Ana: assistente virtual com IA que atende clientes 24h pelo Telegram, tira dúvidas gerais e agenda, cancela e remarca consultas na agenda real do Google com link do Meet, seguindo regras de horário por tipo de cliente.",
+    highlights: [
+      "O modelo devolve apenas JSON validado. Quem decide e executa cada ação é o servidor.",
+      "A remarcação cria o novo compromisso antes de apagar o antigo e reverte se algo falhar.",
+      "Controle de acesso no banco por proprietário, trilha de auditoria e humano no circuito em cada etapa jurídica.",
+      "Integrações reais: Claude (API da Anthropic), Google Agenda, Google Drive e Telegram (WhatsApp implementado e pausado).",
+    ],
+    // TODO: real result, e.g. cases tracked, hours saved per week, consultations booked by Ana.
+    result: undefined,
+    tags: [
+      "TanStack Start",
+      "React 19",
+      "TypeScript",
+      "Tailwind 4",
+      "Vite",
+      "Vitest",
+      "Drizzle",
+      "Supabase",
+      "Cloudflare Workers",
+      "Claude API",
+    ],
+    status: "Em produção",
+    statusNote: "Atendimento em teste",
+    private: true,
+    links: [],
+    visual: "manageradv",
+  },
+  {
+    id: "caixa-novo",
+    name: "Caixa Novo",
+    client: "Distribuidora de frutas · 35 anos de mercado",
+    problem:
+      "Uma distribuidora de frutas com 35 anos de mercado precisava do fluxo de caixa, das contas a receber e das contas a pagar em um só lugar, feito para o dono e para o financeiro.",
+    built:
+      "Um painel de fluxo de caixa que funciona no celular, com tema claro e escuro: visão geral, fluxo de caixa, contas a receber e a pagar, fechamento de gaveta, lançamentos e indicadores. Gera um resumo do dia pronto para enviar no WhatsApp, dá uma nota de pagador a cada cliente pelo histórico dos últimos 180 dias, concilia extratos OFX, CSV ou Excel com os lançamentos (valor exato e até 3 dias de diferença na data) e importa planilhas com sugestão de colunas e conferência antes de aplicar.",
+    highlights: [
+      "Todo valor fica em centavos inteiros, sem erro de ponto flutuante.",
+      "A camada de cálculo é separada das telas.",
+      "Gráficos em SVG feitos à mão, sem biblioteca pesada.",
+    ],
+    tags: ["HTML", "CSS", "JavaScript", "SVG", "Python"],
+    // TODO: status ("Em uso" or "Em implantação").
+    status: undefined,
+    links: [
+      { label: "GitHub", href: "https://github.com/LuisCrivellaro/Caixa-Novo" },
+      // TODO: add { label: "Demo", href: "..." } if there is a deploy.
+    ],
+    linkNote: "Repositório público, só com dados de exemplo",
+    visual: "caixanovo",
+  },
+  // TODO: 03 — Divina App Conect (visual "divina"): what it is, who it's for, main features, stack, status, link, and the main screen to draw.
+  // TODO: 04 — RafaLink CRM (visual "rafalink"): what it is, who it's for, main features, stack, status, link, and the main screen to draw.
+  // TODO: 05 — Dark Pool (visual "darkpool"): what it is, who it's for, main features, stack, status, link, and the main screen to draw.
+];
+
+export type EarlierProject = {
+  id: string;
+  name: string;
+  description: string;
+  href?: string;
+};
+
+export const EARLIER_PROJECTS: readonly EarlierProject[] = [
   {
     id: "ngo-system",
-    index: "01",
-    name: "Institutional System for NGO",
-    description:
-      "Development of a system for organizing internal information, with features focused on institutional data management and process improvement.",
-    tags: ["Web Platform"],
+    name: "Sistema Institucional para ONG",
+    description: "Sistema interno para organizar os dados institucionais e os processos de uma ONG.",
     href: "https://cp1-front-web.vercel.app/",
-    visual: "ngo",
   },
   {
     id: "ecopiso",
-    index: "02",
-    name: "EcoPiso — Sustainable Energy Generator",
-    description:
-      "Prototype focused on clean energy generation, including an interface for visualizing energy data.",
-    tags: ["Prototype", "Energy Data"],
-    visual: "ecopiso",
+    name: "EcoPiso — Gerador de Energia Sustentável",
+    description: "Protótipo de geração de energia limpa, com interface para visualizar dados de energia.",
   },
   {
     id: "ai-agent-automation",
-    index: "03",
-    name: "AI Agent & Automation",
-    description:
-      "Development of an AI agent for process automation, with automated workflows built in n8n, API integrations and AI-powered automation.",
-    tags: ["n8n", "AI", "APIs"],
-    visual: "agent",
+    name: "Agente de IA e Automação",
+    description: "Agente de IA para automação de processos, com fluxos no n8n e integração de APIs.",
   },
   {
     id: "gs-front",
-    index: "04",
     name: "GS Front",
-    description: "A front-end web project built and deployed as part of academic coursework.",
-    tags: ["Web Platform"],
+    description: "Projeto front-end desenvolvido e publicado como trabalho acadêmico.",
     href: "https://gs-front-drab.vercel.app/",
-    visual: "gsfront",
   },
-] as const;
+];
 
+// TODO: add any tools used by projects 03–05.
 export const SKILLS = {
-  Development: ["JavaScript", "HTML", "CSS", "SQL"],
-  "AI & Automation": ["AI Agents", "n8n", "API Integration", "Process Automation"],
-  Tools: ["Git", "GitHub", "Power BI"],
+  Desenvolvimento: [
+    "TypeScript",
+    "JavaScript",
+    "React",
+    "Next.js",
+    "TanStack Start",
+    "HTML",
+    "CSS",
+    "SQL",
+    "Python",
+  ],
+  "Back-end e dados": [
+    "Supabase / Postgres",
+    "Drizzle ORM",
+    "APIs REST",
+    "Cloudflare Workers",
+    "Power BI",
+  ],
+  "IA e automação": [
+    "Agentes de IA",
+    "Claude API (Anthropic)",
+    "Uso de ferramentas por LLM com validação no servidor",
+    "n8n",
+    "Automação de processos",
+  ],
+  "Ferramentas e qualidade": ["Git", "GitHub", "Vitest", "Vercel"],
 } as const;
