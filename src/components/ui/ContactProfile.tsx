@@ -69,7 +69,7 @@ export function ContactProfile({ photo, cv }: { photo: Photo | null; cv?: string
       <div
         className={cn(
           "relative z-10",
-          photo && "-mt-16 mx-4 md:mx-0 md:mt-0 md:-ml-24 md:max-w-xl md:flex-1 md:translate-y-8"
+          photo && "-mt-16 mx-4 md:mx-0 md:mt-0 md:-ml-24 md:max-w-xl md:flex-1"
         )}
       >
         <motion.div
