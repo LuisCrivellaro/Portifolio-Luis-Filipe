@@ -27,13 +27,39 @@ export const SITE = {
   cv: "/cv-luis-crivellaro.pdf",
 } as const;
 
+export type Testimonial = {
+  name: string; // "Nome Sobrenome"
+  role: string; // "Sócia" | "Gerente de Operações" | "Professor"
+  company: string; // "ScaleUp" | "Escritório de advocacia" | "FIAP"
+  quote: string; // real testimonial, 1 to 3 sentences
+  photo?: string; // "/images/testimonials/nome.jpg" (only with permission)
+  linkedin?: string; // the person's profile, for anyone who wants to check
+  project?: string; // id of a featured project, e.g. "manager-adv"
+};
+
+// Only real people who authorized publication. Never fill with examples.
+// The section (and its menu link) only appears with 2 or more items. Format:
+// {
+//   name: "Nome Sobrenome",
+//   role: "Gerente de Operações",
+//   company: "ScaleUp",
+//   quote: "Depoimento real, de 1 a 3 frases.",
+//   photo: "/images/testimonials/nome-sobrenome.jpg",
+//   linkedin: "https://www.linkedin.com/in/...",
+//   project: "manager-adv",
+// },
+export const TESTIMONIALS: readonly Testimonial[] = [];
+
+export const SHOW_TESTIMONIALS = TESTIMONIALS.length >= 2;
+
 export const NAV_LINKS = [
   { label: "Sobre", href: "#about" },
   { label: "Experiência", href: "#experience" },
   { label: "Projetos", href: "#projects" },
+  ...(SHOW_TESTIMONIALS ? [{ label: "Depoimentos", href: "#testimonials" }] : []),
   { label: "Habilidades", href: "#skills" },
   { label: "Contato", href: "#contact" },
-] as const;
+];
 
 export type Photo = {
   src: string;
@@ -43,12 +69,12 @@ export type Photo = {
 };
 
 export const CONTACT = {
-  // Shown once the file exists in public/.
+  // Composition built from luis-contato.jpg: face in a circle over a purple background.
   photo: {
-    src: "/images/luis-contato.jpg",
+    src: "/images/luis-contato-card.jpg",
     width: 960,
     height: 960,
-    alt: "Luis Filipe Crivellaro sorrindo no palco do FIAP NEXT",
+    alt: "Luis Filipe Crivellaro sorrindo, em um retrato circular sobre fundo roxo",
   } satisfies Photo,
 } as const;
 
@@ -161,7 +187,9 @@ export type FeaturedProject = {
   private?: boolean;
   links: readonly { label: string; href: string }[];
   linkNote?: string;
-  // Stylized mini screen of the real system (no screenshots: client brand and data stay private).
+  // Real screenshot with client names covered; when absent, the stylized mini screen is shown.
+  image?: Photo;
+  // Stylized mini screen of the real system, with fictional data.
   visual: ProjectVisualKind;
 };
 
@@ -201,6 +229,12 @@ export const FEATURED_PROJECTS: readonly FeaturedProject[] = [
     statusNote: "Atendimento em teste",
     private: true,
     links: [],
+    image: {
+      src: "/projects/manager-adv.png",
+      width: 672,
+      height: 504,
+      alt: "Painel de casos do Manager ADV: menu do fluxo do caso, prazos, atendimentos e casos acompanhados",
+    },
     visual: "manageradv",
   },
   {
@@ -224,6 +258,12 @@ export const FEATURED_PROJECTS: readonly FeaturedProject[] = [
       // TODO: add { label: "Demo", href: "..." } if there is a deploy.
     ],
     linkNote: "Repositório público, só com dados de exemplo",
+    image: {
+      src: "/projects/caixa-novo.png",
+      width: 1340,
+      height: 1005,
+      alt: "Visão geral do Caixa Novo com dados de exemplo: saldo projetado, prazos médios e títulos a receber e a pagar nos próximos 7 dias",
+    },
     visual: "caixanovo",
   },
   // TODO: 03 — Divina App Conect (visual "divina"): what it is, who it's for, main features, stack, status, link, and the main screen to draw.

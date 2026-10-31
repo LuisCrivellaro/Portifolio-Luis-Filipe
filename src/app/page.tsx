@@ -5,10 +5,11 @@ import { About } from "@/components/sections/About";
 import { Experience } from "@/components/sections/Experience";
 import { Recognition } from "@/components/sections/Recognition";
 import { Projects } from "@/components/sections/Projects";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { Skills } from "@/components/sections/Skills";
 import { GithubSection } from "@/components/sections/GithubSection";
 import { Contact } from "@/components/sections/Contact";
-import { RECOGNITION, SITE } from "@/lib/data";
+import { RECOGNITION, SHOW_TESTIMONIALS, SITE, TESTIMONIALS } from "@/lib/data";
 import { publicAssetExists } from "@/lib/assets";
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
         <Experience index={next()} />
         {recognitions.length > 0 && <Recognition index={next()} items={recognitions} />}
         <Projects index={next()} />
+        {SHOW_TESTIMONIALS && <Testimonials index={next()} items={TESTIMONIALS} />}
         <Skills index={next()} />
         <GithubSection index={next()} />
         <Contact index={next()} cv={cv} />

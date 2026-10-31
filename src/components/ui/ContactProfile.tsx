@@ -60,7 +60,7 @@ export function ContactProfile({ photo, cv }: { photo: Photo | null; cv?: string
             alt={photo.alt}
             sizes="(min-width: 1024px) 460px, (min-width: 768px) 420px, 100vw"
             draggable={false}
-            className="h-full w-full object-cover grayscale transition-[filter,transform] duration-700 ease-out md:group-hover:scale-[1.03] md:group-hover:grayscale-0"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out md:group-hover:scale-[1.03]"
           />
           <span aria-hidden="true" className="absolute bottom-5 left-5 h-0.5 w-12 bg-accent" />
         </motion.figure>

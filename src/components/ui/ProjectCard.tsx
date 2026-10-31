@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight, Lock } from "lucide-react";
 import type { FeaturedProject } from "@/lib/data";
 import { ProjectVisual } from "@/components/ui/ProjectVisual";
@@ -14,7 +15,7 @@ export function ProjectCard({
   reversed: boolean;
 }) {
   return (
-    <article className="group border-t border-border py-16 md:py-20">
+    <article id={`projeto-${project.id}`} className="group scroll-mt-24 border-t border-border py-16 md:py-20">
       <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-14">
         <div
           className={cn(
@@ -25,7 +26,18 @@ export function ProjectCard({
           <Reveal y={40}>
             <div className="relative aspect-4/3 w-full overflow-hidden border border-border-strong bg-bg-elevated">
               <div className="h-full w-full transition-transform duration-700 ease-out md:group-hover:scale-[1.03]">
-                <ProjectVisual visual={project.visual} />
+                {project.image ? (
+                  <Image
+                    src={project.image.src}
+                    width={project.image.width}
+                    height={project.image.height}
+                    alt={project.image.alt}
+                    sizes="(min-width: 1280px) 720px, (min-width: 768px) 56vw, calc(100vw - 48px)"
+                    className="h-full w-full object-cover object-left-top"
+                  />
+                ) : (
+                  <ProjectVisual visual={project.visual} />
+                )}
               </div>
             </div>
           </Reveal>
